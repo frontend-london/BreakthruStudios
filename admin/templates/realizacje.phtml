@@ -1,0 +1,97 @@
+<? include('templates/top.phtml');?>
+    <div id="submenu">
+        <h1>Realizacje</h1>
+        <ul>
+            <?if(!empty($t['menu'])): ?>
+                <?$counter=0; foreach ($t['menu'] as $menu): ?>
+                    <li>
+                        <a class="submenu-left-shorter<?if($menu['id']==$t['record']['id']):?>-selected<?endif;?>" href="<?=SCRIPT."?category=$category&action=edit&id={$menu['id']}"?>"><?=$menu['tytul_pl']?></a>
+                        <div class="submenu-right-longer">
+                            <?if($counter==0): ?>
+                                <img src="images/cms/arrows/top.gif" />
+                            <? else: ?>
+                                <a href="<?=SCRIPT."?category=$category&action=swap&id1={$menu['id']}&id2={$t['menu'][$counter-1]['id']}&id={$t['record']['id']}"?>"><img src="images/cms/arrows/top-a.gif" ></a>
+                            <? endif; ?>
+                            &nbsp;
+                            <a href="<?=SCRIPT."?category=$category&action=delete&id_s={$menu['id']}&id={$t['record']['id']}"?>" class="delete" onClick="return confirm('Czy na pewno chcesz usunąć tą zakładkę?');">Usuń</a>
+                            &nbsp;
+                            <?if($menu==end($t['menu'])): ?>
+                                <img src="images/cms/arrows/bottom.gif" />
+                            <?else:?>
+                                <a href="<?=SCRIPT."?category=$category&action=swap&id1={$menu['id']}&id2={$t['menu'][$counter+1]['id']}&id={$t['record']['id']}"?>"><img src="images/cms/arrows/bottom-a.gif"></a>
+                            <?endif;?>
+                        </div>
+                    </li>
+                <?$counter++; endforeach; ?>
+            <?endif; ?>
+            <li class="noborder">
+                <a class="submenu-right" href="<?=SCRIPT."?category=$category&action=add"?>">+ Dodaj Film</a>
+            </li>
+        </ul>
+    </div>
+    <div id="content">
+        <form method="post" action="<?=SCRIPT."?category=$category&action={$t['action']}" ?>" enctype="multipart/form-data">
+            <ul>
+                <?if(!empty ($t['message'])):?>
+                    <li class="bold red">
+                        <?=$t['message']?>
+                    </li>                
+                <?endif;?>
+                <li>
+                    <span class="content-span">Tytuł filmu (PL)</span>
+                    <input type="text" name="tytul_pl" value="<?=$t['record']['tytul_pl']?>" />
+                </li>
+                <li>
+                    <span class="content-span">Reżyseria (PL)</span>
+                    <input type="text" name="rezyseria_pl" value="<?=$t['record']['rezyseria_pl']?>" />
+                </li>
+                <li>
+                    <span class="content-span">Tytuł filmu (EN)</span>
+                    <input type="text" name="tytul_en" value="<?=$t['record']['tytul_en']?>" />
+                </li>
+                <li>
+                    <span class="content-span">Reżyseria (EN)</span>
+                    <input type="text" name="rezyseria_en" value="<?=$t['record']['rezyseria_en']?>" />
+                </li>
+                <?if(!empty($t['record']['gallery'])): ?>
+                    <li class="noborder">
+                        <span class="content-span">Zdjęcia:</span>
+                        <div id="content-zdjecia-cointainer">
+                            <? $counter=0; foreach ($t['record']['gallery'] as $gallery): ?>
+                                <div class="content-zdjecie-galeria" >
+                                    <img src="images/realizacje/<?=$gallery['id']?>_m.jpg" alt="" class="content-zdjecie-galeria-image" />
+                                    <div class="content-zdjecie-links">
+                                        <div class="clear"></div>
+                                        <?if($counter==0): ?>
+                                            <img src="images/cms/arrows/left.gif" />
+                                        <? else: ?>
+                                            <a href="<?=SCRIPT."?category=$category&action=swap-gallery&id={$t['record']['id']}&id1={$gallery['id']}&id2={$t['record']['gallery'][$counter-1]['id']}"?>"><img src="images/cms/arrows/left-a.gif" ></a>
+                                        <? endif; ?>
+                                        <a href="images/realizacje/<?=$gallery['id']?>.jpg" rel="lightbox[galeria]">Powiększ</a> |
+                                        <a href="<?=SCRIPT."?category=$category&action=delete-gallery&id={$t['record']['id']}&id_s={$gallery['id']}"?>" onclick="return confirm('Czy na pewno chcesz usunąć to zdjęcie?');">Usuń zdjęcie</a>
+                                        <?if($gallery==end($t['record']['gallery'])): ?>
+                                            <img src="images/cms/arrows/right.gif" />
+                                        <?else:?>
+                                            <a href="<?=SCRIPT."?category=$category&action=swap-gallery&id={$t['record']['id']}&id1={$gallery['id']}&id2={$t['record']['gallery'][$counter+1]['id']}"?>"><img src="images/cms/arrows/right-a.gif"></a>
+                                        <?endif;?>
+                                    </div>
+                                </div>
+                            <?$counter++; endforeach; ?>
+                        </div>
+                        <div class="clear"></div>
+                    </li>
+                <?endif; ?>
+                <li>
+                    <span class="content-span">Dodaj zdjęcie:</span>
+                    <input type="hidden"  name="id" value="<?=$t['record']['id']?>" />
+                    <input type="file"  name="image" /><br>
+                </li>
+                <li class="noborder">
+                    <div id="content-zapisz">
+                        <input type="image" id="content-zapisz-button" src="images/cms/button-zapisz-zmiany.gif" />
+                    </div>
+                </li>
+            </ul>
+        </form>
+    </div>
+<? include('templates/bottom.phtml');?>
