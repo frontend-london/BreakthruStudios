@@ -3,14 +3,8 @@
 	define('WT_CMS_USERNAME', 'admin');
 	define('WT_CMS_PASSWORD', 'admin');
         
-        define('DB_SERVER', 'localhost');
-	define('DB_SERVER_USERNAME', 'modul_breakthru');
-	define('DB_SERVER_PASSWORD', 'XlCkNgeP');
-	define('DB_DATABASE', 'modul_breakthru');
-        
-//        define('DB_SERVER', 'localhost');
-//	define('DB_SERVER_USERNAME', 'breakthrufilms3');
-//	define('DB_SERVER_PASSWORD', 'GnCP;MYN4_2');
-//	define('DB_DATABASE', 'breakthrufilms3');
-
+	define('DB_SERVER', 'localhost');
+	define('DB_SERVER_USERNAME', 'root');
+	define('DB_SERVER_PASSWORD', '');
+	define('DB_DATABASE', 'breakthru');
 ?>
